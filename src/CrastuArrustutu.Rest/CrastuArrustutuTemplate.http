@@ -1,0 +1,6 @@
+@CrastuArrustutuTemplate_HostAddress = http://localhost:5030
+
+GET {{CrastuArrustutuTemplate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
