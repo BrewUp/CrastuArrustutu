@@ -1,4 +1,5 @@
-﻿using CrastuArrustutu.Tannura.Facade.Endpoints;
+﻿using CrastuArrustutu.Tannura.Facade;
+using CrastuArrustutu.Tannura.Facade.Endpoints;
 
 namespace CrastuArrustutu.Rest.Modules;
 
@@ -9,6 +10,8 @@ public class TannuraModule : IModule
     
     public IServiceCollection Register(WebApplicationBuilder builder)
     {
+        builder.Services.AddTannuraFacade();
+        
         return builder.Services;
     }
 

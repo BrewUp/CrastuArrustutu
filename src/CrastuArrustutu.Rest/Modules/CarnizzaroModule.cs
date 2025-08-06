@@ -1,4 +1,5 @@
-﻿using CrastuArrustutu.Carnizzaro.Facade.Endpoints;
+﻿using CrastuArrustutu.Carnizzaro.Facade;
+using CrastuArrustutu.Carnizzaro.Facade.Endpoints;
 
 namespace CrastuArrustutu.Rest.Modules;
 
@@ -9,6 +10,7 @@ public class CarnizzaroModule : IModule
     
     public IServiceCollection Register(WebApplicationBuilder builder)
     {
+        builder.Services.AddCarnizzaroFacade();
         
         return builder.Services;
     }

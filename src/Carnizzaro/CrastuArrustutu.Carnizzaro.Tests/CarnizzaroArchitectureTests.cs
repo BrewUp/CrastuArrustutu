@@ -59,7 +59,7 @@ public class CarnizzaroArchitectureTests
         
         var typesWithCorrectNamespace = Types.InAssemblies(carnizzaroAssemblies)
             .That()
-            .ResideInNamespaceStartingWith("CrastuArrustutu.Cannizzaro")
+            .ResideInNamespaceStartingWith("CrastuArrustutu.Carnizzaro")
             .And()
             .AreNotNested()
             .GetTypes();
