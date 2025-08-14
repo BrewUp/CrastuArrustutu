@@ -5,7 +5,7 @@
    - Il template CrastuArrustutu.Rest è un progetto di esempio che mostra come implementare un'API RESTful utilizzando un modello custom Minimal API.  
    - Il progetto CrastuArrustutu.Rest include già le configurazioni necessarie per OpenAPI, Swagger e OpenTelemetry e altro. Usale.
    - Il progetto CrastuArrustutu.Rest include anche le configurazioni per la gestione della documentazione e delle metriche. Usale.
-   - Il template CrastuArrustutu.Rest contiene un'interfaccia IModule che devi implementare nei moduli, così come devi usare le classi e le interfacce già presenti.
+   - Il template CrastuArrustutu.Rest contiene un'interfaccia IModule che devi utilizzare nei moduli, così come devi usare le classi e le interfacce già presenti.
    - Il template CrastuArrustutu.Rest contiene anche un OpenApiModule e un OpenTelemetryModule che devi usare per esporre la documentazione OpenAPI e le metriche di monitoraggio.
    - Il template CrastuArrustutu.Rest contiene ModuleExtensions che contiene i metodi per registrare i moduli.
    - Il template CrastuArrustutu.Rest contiene il file program.cs così come deve essere nella soluzione finale.
