@@ -6,15 +6,17 @@
 3. Devi obbigatoriamente utilizzare il template che trovi all'indirizzo https://github.com/BrewUp/CrastuArrustutu. Non usare il template di default di .NET 9.
    - Se non riesci ad accedere al template, prova a clonare il repository.
    - Se non riesci nemmeno a clonare il repository, fermati.
-   - Nel template trovi il progetto di esempio CrastuArrustutu.Rest che mostra come implementare un'API RESTful utilizzando un modello custom Minimal API.
-   - Il progetto di esempio CrastuArrustutu.Rest include già le configurazioni necessarie per OpenAPI, Swagger e OpenTelemetry e altro. Usale.
-   - Il progetto di esempio CrastuArrustutu.Rest include anche le configurazioni per la gestione della documentazione e delle metriche. Usale.
-   - Il progetto CrastuArrustutu.Rest contiene un'interfaccia `IModule` che devi utilizzare nei moduli, così come devi usare le classi e le interfacce già presenti.
-   - Il progetto di esempio CrastuArrustutu.Rest contiene anche un OpenApiModule e un OpenTelemetryModule che devi usare per esporre la documentazione OpenAPI e le metriche di monitoraggio.
-   - Il progetto di esempio CrastuArrustutu.Rest contiene ModuleExtensions che contiene i metodi per registrare i moduli.
-   - Il progetto di esempio CrastuArrustutu.Rest contiene il file `program.cs` così già pronto per essere utilizzato nella soluzione finale.
-   - Il progetto di esempio CrastuArrustutu.Rest contiene i file CarnizzaroModule.cs e TannuraModule.cs che mostrano come invocare i metodi dei rispettivi progetti Facade. Replica il comportamento del template per i nuovi progetti `{SpiedoBresciano}.{Macelleria}.Facade` e `{SpiedoBresciano}.{Trattoria}.Facade`
+   - Nel template trovi il progetto di esempio `CrastuArrustutu.Rest` che mostra come implementare un'API RESTful utilizzando un modello custom Minimal API.
+   - Il progetto di esempio `CrastuArrustutu.Rest` include già le configurazioni necessarie per OpenAPI, Swagger e OpenTelemetry e altro. Usale.
+   - Il progetto di esempio `CrastuArrustutu.Rest` include anche le configurazioni per la gestione della documentazione e delle metriche. Usale.
+   - Il progetto `CrastuArrustutu.Rest` contiene un'interfaccia `IModule` che devi utilizzare nei moduli, così come devi usare le classi e le interfacce già presenti.
+   - Il progetto di esempio `CrastuArrustutu.Rest` contiene anche un OpenApiModule e un OpenTelemetryModule che devi usare per esporre la documentazione OpenAPI e le metriche di monitoraggio.
+   - Il progetto di esempio `CrastuArrustutu.Rest` contiene ModuleExtensions che contiene i metodi per registrare i moduli.
+   - Il progetto di esempio `CrastuArrustutu.Rest` contiene il file `program.cs` così già pronto per essere utilizzato nella soluzione finale.
+   - Il progetto di esempio `CrastuArrustutu.Rest` contiene i file `CarnizzaroModule.cs` e `TannuraModule.cs` che mostrano come invocare i metodi dei rispettivi progetti Facade. Replica il comportamento del template per i nuovi progetti `{SpiedoBresciano}.{Macelleria}.Facade` e `{SpiedoBresciano}.{Trattoria}.Facade`
    - Tutti i progetti di esempio presenti nel template hanno come prefisso `{CrastuArrustutu}`, ma tu devi usare il prefisso `{SpiedoBresciano}` per i tuoi progetti.
+   - Mantieni la struttura del progetto `CrastuArrustutu.Rest`, ossia cartella `Modules` e crea i file Module al suo interno.
+   - Quando crei un nuovo progetto, rimuovi la classe di default `Class1.cs`
 4. Nel progetto Rest della nuova applicazione prepara i file Module (`TrattoriaModule` e `MacelleriaModule`), che implementano `IModule` per gestire i Bounded Context di `macelleria`e `trattoria`.
 5. Nei progetti `{SpiedoBresciano}.{Macelleria}.Facade` e `{SpiedoBresciano}.{Trattoria}.Facade` prepara le classi per esporre gli endpoints come nei progetti di esempio `Cannizzaro/CrastuArrustutu.Cannizzaro.Facade` e `Tannura/CrastuArrustutu.Tannura.Facade`.
    - Usa i file `CarnizzaroFacadeHelper` e `TannuraFacadeHelper` come riferimento per implementare i tuoi helper.
@@ -51,7 +53,7 @@
 7. Non creare Entità, Repository o servizi specifici per i moduli Macelleria e Trattoria. Concentrati solo sulla struttura della solution e sull'implementazione dei Facade e dei moduli.
 8. Implementa i test di architettura utilizzando la libreria NetArchTest, presente nei progetti `CrastuArrustutu.Carnizzaro.Tests` e `CrastuArrustutu.Tannura.Tests`, per verificare il corretto isolamento dei moduli.
 
-9. Quessta fase è considerata DONE quando:
+9. Questa fase è considerata DONE quando:
   - La solution compila (Debug/Release) senza warning critici (idealmente treat warnings as errors).
   - Tutti i test architetturali (NetArchTest) passano.
   - Endpoint di base esposti: `/v1/macelleria`, `/v1/trattoria` (anche vuoti) → HTTP 200/204.
@@ -59,55 +61,48 @@
   - Telemetria configurabile (OpenTelemetry module disattivato finché non configurato).
   - README aggiornato con istruzioni run locali.
 
-## Regole per i Test Architetturali
+10. Regole per i Test Architetturali
   - Non ci devono essere dipendenze fra i moduli (es. Nessun progetto di un modulo deve fare riferimento a un progetto di un altro modulo).
   - Il progetto `{SpiedoBresciano.Rest}` deve essere l'unico punto di accesso per le API esterne.
   - Il progetto `{SpiedoBresciano.Rest}` deve avere dipendenze solo con i progetti `Facade` dei moduli `Macelleria` e `Trattoria`.
 
-## Naming & Convenzioni
+11. Naming & Convenzioni
 - Namespace radice: `SpiedoBresciano.[Modulo].[Strato]`.
 - Endpoint group path: `/v1/{modulo}` (versione nel path per semplicità iniziale).
 - File Module: `{NomeModulo}Module.cs` implementa `IModule`.
 - Interfacce Facade: `IMacelleriaFacade`, `ITrattoriaFacade` (anche vuote inizialmente) in progetto Facade.
 
----
-## Versioning API
+12. Versioning API
 - Strategia iniziale: path-based (`/v1`).
 - Quando si introdurrà `/v2`, duplicare solo endpoints modificati (Backward compatibility).
 - OpenAPI Title includa versione maggiore (`SpiedoBresciano API v1`).
 
----
-## OpenAPI & Documentazione
+13. OpenAPI & Documentazione
 - Generare un singolo documento per major version.
 - Server URL base `/` per compatibilità reverse proxy.
 - Tag: usare il nome del modulo in PascalCase.
 - Evitare esposizione tipi interni di dominio: utilizzare DTO nel Facade layer.
 
----
-## Logging
+14. Logging
 - Serilog con sink Console + File (rolling) + livello minimo `Information` (override `Microsoft.*` a `Warning`).
 - Correlazione: includere trace/span id se OpenTelemetry attivo.
 
----
-## Telemetria (OpenTelemetry)
+15. Telemetria (OpenTelemetry)
 - Resource Attributes obbligatori: `service.name=SpiedoBrescianoApi`, `service.version=<assemblyVersion>`.
 - Attivare modulo impostando `IsEnabled=true`.
 - Esportatori minimi: OTLP (futuro) + Azure Monitor.
 
----
-## 9. Error Handling
+16. Error Handling
 - Standardizzare su `ProblemDetails` (RFC 7807).
 - Mappare eccezioni di dominio (future) in 409 / 422 (a seconda dei casi) + codice custom in `problemDetails.Extensions["errorCode"]`.
 
----
-## Sicurezza
+17. Sicurezza
 - Questa API sarà pubblicata su Azure come Container App.
 - Prevedere autenticazione e autorizzazione tramite Azure AD.
 
----
-## Health & Operatività
+18. Health & Operatività
 - Aggiungere /healthz (liveness) e /ready (readiness) (TODO).
 - Metriche OTel automaticamente su `/metrics` se introdotto exporter Prometheus (non ancora richiesto).
 
-## Summary
+19. Summary
 - Dopo aver generato la nuova applicazione, formula un giudizio su questo prompt rispetto al risultato ottenuto.
