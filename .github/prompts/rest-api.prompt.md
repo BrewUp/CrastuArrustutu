@@ -1,8 +1,11 @@
 # Istruzioni per implementare una nuova API .NET utilizzando un template
 
+## Feature iniziale
 1. Utilizza il glossario dei termini per comprendere i concetti chiave che trovi nel file glossario.prompt.md e le direttive su DDD che trovi nel file domain-driven-design.prompt.md.
 2. Utilizza il modello Minimal API di .NET 9 per implementare le API.
 3. Devi obbigatoriamente utilizzare il template che trovi all'indirizzo https://github.com/BrewUp/CrastuArrustutu. Non usare il template di default di .NET 9.
+   - Se non riesci ad accedere al template, prova a clonare il repository.
+   - Se non riesci nemmeno a clonare il repository, fermati.
    - Nel template trovi il progetto di esempio CrastuArrustutu.Rest che mostra come implementare un'API RESTful utilizzando un modello custom Minimal API.
    - Il progetto di esempio CrastuArrustutu.Rest include già le configurazioni necessarie per OpenAPI, Swagger e OpenTelemetry e altro. Usale.
    - Il progetto di esempio CrastuArrustutu.Rest include anche le configurazioni per la gestione della documentazione e delle metriche. Usale.
@@ -47,4 +50,64 @@
 
 7. Non creare Entità, Repository o servizi specifici per i moduli Macelleria e Trattoria. Concentrati solo sulla struttura della solution e sull'implementazione dei Facade e dei moduli.
 8. Implementa i test di architettura utilizzando la libreria NetArchTest, presente nei progetti `CrastuArrustutu.Carnizzaro.Tests` e `CrastuArrustutu.Tannura.Tests`, per verificare il corretto isolamento dei moduli.
-9. Dopo aver generato la nuova applicazione, formula un giudizio su questo prompt rispetto al risultato ottenuto.
+
+9. Quessta fase è considerata DONE quando:
+  - La solution compila (Debug/Release) senza warning critici (idealmente treat warnings as errors).
+  - Tutti i test architetturali (NetArchTest) passano.
+  - Endpoint di base esposti: `/v1/macelleria`, `/v1/trattoria` (anche vuoti) → HTTP 200/204.
+  - Swagger/OpenAPI accessibile (JSON + UI Scalar) e versione valorizzata.
+  - Telemetria configurabile (OpenTelemetry module disattivato finché non configurato).
+  - README aggiornato con istruzioni run locali.
+
+## Regole per i Test Architetturali
+  - Non ci devono essere dipendenze fra i moduli (es. Nessun progetto di un modulo deve fare riferimento a un progetto di un altro modulo).
+  - Il progetto `{SpiedoBresciano.Rest}` deve essere l'unico punto di accesso per le API esterne.
+  - Il progetto `{SpiedoBresciano.Rest}` deve avere dipendenze solo con i progetti `Facade` dei moduli `Macelleria` e `Trattoria`.
+
+## Naming & Convenzioni
+- Namespace radice: `SpiedoBresciano.[Modulo].[Strato]`.
+- Endpoint group path: `/v1/{modulo}` (versione nel path per semplicità iniziale).
+- File Module: `{NomeModulo}Module.cs` implementa `IModule`.
+- Interfacce Facade: `IMacelleriaFacade`, `ITrattoriaFacade` (anche vuote inizialmente) in progetto Facade.
+
+---
+## Versioning API
+- Strategia iniziale: path-based (`/v1`).
+- Quando si introdurrà `/v2`, duplicare solo endpoints modificati (Backward compatibility).
+- OpenAPI Title includa versione maggiore (`SpiedoBresciano API v1`).
+
+---
+## OpenAPI & Documentazione
+- Generare un singolo documento per major version.
+- Server URL base `/` per compatibilità reverse proxy.
+- Tag: usare il nome del modulo in PascalCase.
+- Evitare esposizione tipi interni di dominio: utilizzare DTO nel Facade layer.
+
+---
+## Logging
+- Serilog con sink Console + File (rolling) + livello minimo `Information` (override `Microsoft.*` a `Warning`).
+- Correlazione: includere trace/span id se OpenTelemetry attivo.
+
+---
+## Telemetria (OpenTelemetry)
+- Resource Attributes obbligatori: `service.name=SpiedoBrescianoApi`, `service.version=<assemblyVersion>`.
+- Attivare modulo impostando `IsEnabled=true`.
+- Esportatori minimi: OTLP (futuro) + Azure Monitor.
+
+---
+## 9. Error Handling
+- Standardizzare su `ProblemDetails` (RFC 7807).
+- Mappare eccezioni di dominio (future) in 409 / 422 (a seconda dei casi) + codice custom in `problemDetails.Extensions["errorCode"]`.
+
+---
+## Sicurezza
+- Questa API sarà pubblicata su Azure come Container App.
+- Prevedere autenticazione e autorizzazione tramite Azure AD.
+
+---
+## Health & Operatività
+- Aggiungere /healthz (liveness) e /ready (readiness) (TODO).
+- Metriche OTel automaticamente su `/metrics` se introdotto exporter Prometheus (non ancora richiesto).
+
+## Summary
+- Dopo aver generato la nuova applicazione, formula un giudizio su questo prompt rispetto al risultato ottenuto.
