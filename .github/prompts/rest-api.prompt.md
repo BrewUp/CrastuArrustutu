@@ -22,7 +22,7 @@
    - Usa i file `CarnizzaroFacadeHelper` e `TannuraFacadeHelper` come riferimento per implementare i tuoi helper.
    - Usa i file `CarnizzaroEndpoints` e `TannuraEndpoints` come riferimento per implementare i tuoi endpoints.
    - I progetti Facade devono esporre le interfacce `IMacelleriaFacade` e `ITrattoriaFacade`.
-6. Suddivi la solution in diversi progetti, suddivisi per solution folder. I solution folder non sono cartelle fisiche nel file system, ma sono una struttura logica per organizzare i progetti nella soluzione. Le uniche cartelle fisiche sono quelle dei moduli Macelleria e Trattoria. Segui l'organizzazione della solution come da esempio che trovi nel repository CrastuArrustutu:
+6. Suddivi la solution in diversi progetti, suddivisi per solution folder. I solution folder non sono cartelle fisiche nel file system, ma sono una struttura logica per organizzare i progetti nella soluzione. Le uniche cartelle fisiche sono quelle dei moduli Macelleria e Trattoria. Segui l'organizzazione della solution come da esempio che trovi nel repository CrastuArrustutu, e mantieni la nomenclatura delle solution folder:
    - Solution Folder `90 Presentation`:
      - Un solo progetto per la parte rest API.
       - Il progetto rest deve esporre la documentazione OpenAPI e Swagger sempre rispettando il template, quindi inserendo il codice in un OpenApiModule

@@ -29,3 +29,4 @@
 3. Evita di introdurre complessità non necessarie.
 4. Utilizza nomi di variabili e metodi significativi.
 5. Scrivi test automatizzati per il tuo codice.
+6. Non utilizzare la struttura Enum per implementare dati enumerativi, ma la classe Enumeration.cs che trovi nel progetto CrastuArrustutu.Shared.
