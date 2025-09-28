@@ -14,7 +14,7 @@ In questo progetto implementa
 - Utilizza il CommandHandler che trovi nel repository di esempio.
 
 # Progetto Shared
-Utilizza questo progetto per 
+Utilizza il progetto shared del modulo per 
 - Definire, nella cartella Messages, i comandi (cartella Commands) e gli eventi (cartella Events) utilizzando le classi Command e DomainEvent che trovi nella libreria Muflone.
 - Definire tipi custom nella cartella CustomTypes. Non utilizzare tipi primitivi per definire le proprietà degli oggetti, ma scrivi dei tipi custom utilizzando Record e classi base di Muflone, come ad esempio:
   - SpiedoId : DomainId
