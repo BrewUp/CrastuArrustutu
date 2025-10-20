@@ -51,7 +51,10 @@
      - `SpiedoBresciano.Shared`: per le classi, i tipi custom e le interfacce condivise tra i progetti della solution.
 
 7. Non creare Entità, Repository o servizi specifici per i moduli Macelleria e Trattoria. Concentrati solo sulla struttura della solution e sull'implementazione dei Facade e dei moduli.
-    Quando crei i progetti Domain e ReadModel, non aggiungere le classi abastract CommandHandlerBaseAsync e DomainEventHandlerBaseAsync, perché non sono necessarie in questa fase iniziale.
+    Quando crei i progetti Domain e ReadModel, non aggiungere le classi abastract CommandHandlerBaseAsync e DomainEventHandlerBaseAsync, perché non sono necessarie in questa fase iniziale,
+    e non aggiungere ne i commandHandler, ne gli eventHandler, perché sono da esempio per i prossimi passi.
+    Quando crei il progetto Infastructure limitati a creare il file `InfrastructureHelper.cs` e `EventStoreSettings` senza registrare altro.
+    
 8. Implementa i test di architettura utilizzando la libreria NetArchTest, presente nei progetti `CrastuArrustutu.Carnizzaro.Tests` e `CrastuArrustutu.Tannura.Tests`, per verificare il corretto isolamento dei moduli.
 
 9. Questa fase è considerata DONE quando:

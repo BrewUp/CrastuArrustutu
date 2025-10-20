@@ -1,4 +1,6 @@
-﻿namespace CrastuArrustutu.Rest.Modules;
+﻿using CrastuArrustutu.Infrastructure;
+
+namespace CrastuArrustutu.Rest.Modules;
 
 public class InfrastructureModule : IModule
 {
@@ -6,7 +8,10 @@ public class InfrastructureModule : IModule
     public int Order => 0;
     
     public IServiceCollection Register(WebApplicationBuilder builder)
-    {        
+    {
+        builder.Services.AddInfrastructure(builder.Configuration.GetSection("CrastuArrustutu:EventStore")
+            .Get<EventStoreSettings>()!);
+        
         builder.Services.AddAntiforgery(options =>
         {
             // Set Cookie properties using CookieBuilder properties†.

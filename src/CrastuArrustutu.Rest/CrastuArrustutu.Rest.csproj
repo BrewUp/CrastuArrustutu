@@ -31,6 +31,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Carnizzaro\CrastuArrustutu.Carnizzaro.Facade\CrastuArrustutu.Carnizzaro.Facade.csproj" />
+      <ProjectReference Include="..\CrastuArrustutu.Infrastructure\CrastuArrustutu.Infrastructure.csproj" />
       <ProjectReference Include="..\Tannura\CrastuArrustutu.Tannura.Facade\CrastuArrustutu.Tannura.Facade.csproj" />
     </ItemGroup>
 
