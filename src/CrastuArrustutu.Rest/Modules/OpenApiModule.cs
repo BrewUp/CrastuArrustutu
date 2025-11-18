@@ -1,47 +1,47 @@
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 namespace CrastuArrustutu.Rest.Modules;
 
 public class OpenApiModule : IModule
 {
-    public bool IsEnabled => true;
-    public int Order => 0;
+  public bool IsEnabled => true;
+  public int Order => 0;
 
-    public IServiceCollection Register(WebApplicationBuilder builder)
+  public IServiceCollection Register(WebApplicationBuilder builder)
+  {
+    builder.Services.AddOpenApi(options =>
     {
-        builder.Services.AddOpenApi(options =>
+      options.AddDocumentTransformer((document, _, _) =>
+      {
+        document.Servers = [new OpenApiServer { Url = "/" }];
+        document.Info = new OpenApiInfo
         {
-            options.AddDocumentTransformer((document, _, _) =>
-            {
-                document.Servers = [new OpenApiServer {Url = "/"}];
-                document.Info = new OpenApiInfo
-                {
-                    Title = "CastruArrututu API",
-                    Version = "v1.0",
-                    Description = "CastruArrututu API",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "CastruArrututu"
-                    }
-                };
+          Title = "CrastuArrustutu API",
+          Version = "v1.0",
+          Description = "CrastuArrustutu API for managing a Crastu dishes",
+          Contact = new OpenApiContact
+          {
+            Name = "CrastuArrustutu"
+          }
+        };
 
-                return Task.CompletedTask;
-            });
-        });
+        return Task.CompletedTask;
+      });
+    });
 
-        return builder.Services;
-    }
+    return builder.Services;
+  }
 
-    public WebApplication Configure(WebApplication app)
+  public WebApplication Configure(WebApplication app)
+  {
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
     {
-        app.MapOpenApi();
-        app.MapScalarApiReference(options =>
-        {
-            options.WithTitle("CastruArrututu API")
-                .WithTheme(ScalarTheme.None);
-        });
+      options.WithTitle("BrewUp API")
+              .WithTheme(ScalarTheme.None);
+    });
 
-        return app;
-    }
+    return app;
+  }
 }
